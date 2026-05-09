@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shefaul Cyber Expert</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===== GLOBAL ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:#050505;color:#fff;overflow-x:hidden;}
+
+/* ===== GRID BACKGROUND ===== */
+.bg-grid{position:fixed;inset:0;background:
+ linear-gradient(rgba(0,255,255,.08) 1px, transparent 1px),
+ linear-gradient(90deg, rgba(0,255,255,.08) 1px, transparent 1px);
+ background-size:80px 80px;z-index:-2;}
+
+/* ===== LEFT CYBER BAR ===== */
+.cyber-bar{position:fixed;left:0;top:0;width:80px;height:100vh;background:linear-gradient(180deg,#00ffff,#ff4fd8);display:flex;justify-content:center;align-items:center;box-shadow:0 0 40px cyan;}
+.cyber-bar span{writing-mode:vertical-rl;letter-spacing:4px;font-size:13px;}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;right:0;width:auto;padding:10px 30px;background:rgba(0,255,255,.05);border-radius:0 0 0 25px;display:flex;gap:20px;z-index:10;}
+.navbar a{color:#00ffcc;text-decoration:none;font-weight:bold;transition:.3s;}
+.navbar a.active,a:hover{color:#ff4fd8;}
+
+/* ===== SECTIONS ===== */
+section{padding:100px 80px 80px 120px;}
+h2{text-align:center;font-size:2.4rem;margin-bottom:50px;color:#00ffcc;}
+
+/* ===== FRONT ===== */
+.front{min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr;align-items:center;}
+.front h1{font-size:3.8rem;}
+.she{color:#ff2f92;}
+.cy{color:#00ffcc;}
+.front p{margin-top:20px;opacity:.8;max-width:520px;}
+.btn{margin-top:30px;padding:14px 40px;border:none;border-radius:40px;background:linear-gradient(90deg,#00ffff,#ff4fd8);font-weight:bold;cursor:pointer;box-shadow:0 0 30px cyan;}
+
+/* ===== 3D CUBE ===== */
+.cube-wrap{display:flex;justify-content:center;perspective:1200px;}
+.cube{width:220px;height:220px;position:relative;transform-style:preserve-3d;animation:spin 14s linear infinite;}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg);}}
+.face{position:absolute;width:220px;height:220px;border:2px solid #00ffff;background:rgba(0,255,255,.06);}
+.face img{width:100%;height:100%;object-fit:cover;}
+.face:nth-child(1){transform:translateZ(110px);}
+.face:nth-child(2){transform:rotateY(90deg) translateZ(110px);}
+.face:nth-child(3){transform:rotateY(180deg) translateZ(110px);}
+.face:nth-child(4){transform:rotateY(-90deg) translateZ(110px);}
+.face:nth-child(5){transform:rotateX(90deg) translateZ(110px);}
+.face:nth-child(6){transform:rotateX(-90deg) translateZ(110px);}
+
+/* ===== CARD GRID ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(0,255,255,.3);padding:30px;border-radius:18px;box-shadow:0 0 20px rgba(0,255,255,.2);transition:.3s;position:relative;}
+.card:hover{transform:translateY(-10px);box-shadow:0 0 40px cyan;}
+.card h3{color:#00ffcc;}
+.card p{margin-top:12px;font-size:14px;opacity:.85;}
+
+/* ===== EXPERTISE SKILLS ANIMATION ===== */
+.skill-bar{width:100%;height:10px;background:rgba(0,255,255,.1);border-radius:10px;margin-top:10px;overflow:hidden;}
+.skill-bar span{display:block;height:100%;width:0;background:#ff4fd8;border-radius:10px;animation:skillAnim 2s forwards;}
+@keyframes skillAnim{from{width:0;}to{width:var(--width);}}
+
+/* ===== SCROLL ANIMATION INIT ===== */
+.front, .team, .testimonials, .gallery, .hire, .admin-panel, .contact{opacity:0;transform:translateY(50px);transition:.8s;}
+
+/* ===== GALLERY ===== */
+.gallery img{width:100%;border-radius:16px;box-shadow:0 0 20px cyan;}
+
+/* ===== HIRE ===== */
+.price{margin-top:10px;color:#ff4fd8;}
+.hire-btn{margin-top:15px;padding:10px 25px;border:none;border-radius:30px;background:linear-gradient(90deg,#00ffff,#ff4fd8);cursor:pointer;}
+
+/* ===== ADMIN PANEL ===== */
+.admin-panel{background:rgba(0,255,255,.05);border:1px solid rgba(0,255,255,.3);padding:30px;border-radius:20px;box-shadow:0 0 20px rgba(0,255,255,.2);max-width:800px;margin:auto;}
+.admin-panel h3{color:#ff4fd8;margin-bottom:20px;}
+.admin-panel input, .admin-panel textarea, .admin-panel select{width:100%;padding:12px;margin-bottom:15px;border-radius:10px;border:none;outline:none;background:#050505;color:#fff;}
+.admin-panel button{padding:12px 25px;border:none;border-radius:25px;background:linear-gradient(90deg,#00ffff,#ff4fd8);cursor:pointer;}
+
+/* ===== CONTACT ===== */
+form{max-width:600px;margin:auto;display:grid;gap:15px;}
+input,textarea{padding:12px;border-radius:10px;border:none;outline:none;}
+textarea{height:120px;}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:40px;opacity:.7;}
+
+/* ===== DARK/LIGHT TOGGLE ===== */
+.theme-toggle{position:fixed;top:20px;left:100px;padding:10px 15px;background:#00ffff;color:#050505;font-weight:bold;border:none;border-radius:25px;cursor:pointer;z-index:10;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+ section{padding:80px 30px 80px 100px;}
+ .front{grid-template-columns:1fr;text-align:center;}
+ .cube-wrap{margin-top:50px;}
+ .navbar{flex-direction:column;right:0;top:80px;border-radius:0 0 25px 0;}
+ .theme-toggle{top:80px;left:30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="cyber-bar"><span>CYBER SECURITY EXPERT SHEFAUL</span></div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+ <a href="#front" class="active">Home</a>
+ <a href="#expertise">Expertise</a>
+ <a href="#gallery">Gallery</a>
+ <a href="#hire">Hire</a>
+ <a href="#admin">Admin</a>
+ <a href="#contact">Contact</a>
+</div>
+
+<button class="theme-toggle" onclick="toggleTheme()">Dark/Light</button>
+
+<!-- FRONT -->
+<section class="front" id="front">
+ <div>
+  <h1><span class="she">Cyber Expert</span><br><span class="cy">Shefaul</span></h1>
+  <p>Ethical Cyber Security Specialist & Digital Protection Expert<br>
+  Team: CYBER 404</p>
+  <a href="#hire"><button class="btn">Hire Me</button></a>
+ </div>
+ <div class="cube-wrap">
+  <div class="cube">
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910762.png" alt=""></div>
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910737.png" alt=""></div>
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910755.png" alt=""></div>
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910739.png" alt=""></div>
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910746.png" alt=""></div>
+   <div class="face"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910730.png" alt=""></div>
+  </div>
+ </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+<h2>Cyber Expertise</h2>
+<div class="grid">
+ <div class="card"><h3>Email Security</h3><p>Email protection, recovery & security testing.</p><div class="skill-bar"><span style="--width:90%"></span></div></div>
+ <div class="card"><h3>Facebook Recovery</h3><p>Account recovery & protection support.</p><div class="skill-bar"><span style="--width:85%"></span></div></div>
+ <div class="card"><h3>WhatsApp Security</h3><p>Account security awareness & recovery.</p><div class="skill-bar"><span style="--width:80%"></span></div></div>
+ <div class="card"><h3>Penetration Testing</h3><p>Website security testing & reports.</p><div class="skill-bar"><span style="--width:95%"></span></div></div>
+ <div class="card"><h3>Bug Finding</h3><p>Finding vulnerabilities ethically.</p><div class="skill-bar"><span style="--width:75%"></span></div></div>
+ <div class="card"><h3>Account Protection</h3><p>Secure accounts against attacks.</p><div class="skill-bar"><span style="--width:90%"></span></div></div>
+</div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+<h2>Cyber Gallery</h2>
+<div class="grid gallery" id="gallery-grid">
+ <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">
+ <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87">
+ <img src="./images/Screenshot_1.PNG">
+ <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
+</div>
+</section>
+
+<!-- HIRE -->
+<section id="hire">
+<h2>Hire Services</h2>
+<div class="grid" id="hire-grid">
+ <!-- Updated Hire Buttons with Email/WhatsApp -->
+ <div class="card"><h3>Email Service</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">
+     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Photos</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Facebook</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>WhatsApp</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>X</h3><p class="price">Price: $50</p>
+   <a href="mailto:shefaul@example.com?subject=Hire%20X%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20X%20Service" target="_blank">
+     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Instagram</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>LinkedIn</h3><p class="price">Price: $50</p>
+   <a href="https://wa.me/8801234567890?text=Hi%20Shefaul,%20I%20want%20to%20hire%20LinkedIn%20Service" target="_blank">
+     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Tiktok</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Discord</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Imo</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Snapchat</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>PUBG</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Free Fire</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Clash Of Clans</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>All Game (Per)</h3><p class="price">Price: $50</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+ <div class="card"><h3>Recover Data (Any)</h3><p class="price">Price: $100</p>
+   <a href="mailto:mdshefaulhasan21@gmail.com?subject=Hire%20Email%20Service&body=Hi%20Shefaul,%20I%20want%20to%20hire%20the%20Email%20Service" target="_blank">     <button class="hire-btn">Hire Me</button>
+   </a>
+ </div>
+</div>
+</section>
+
+<!-- ADMIN PANEL -->
+<section id="admin">
+<h2>Admin Panel</h2>
+<div class="admin-panel">
+ <h3>Update Notice</h3>
+ <input type="text" placeholder="Notice Title" id="notice-title">
+ <textarea placeholder="Notice Details" id="notice-details"></textarea>
+ <button onclick="addNotice()">Update Notice</button>
+ <br><br>
+
+ <h3>Update Hire Services</h3>
+ <select id="hire-service-select">
+   <option>Email Service</option>
+   <option>Facebook</option>
+   <option>WhatsApp</option>
+ </select>
+ <input type="text" placeholder="New Price" id="hire-price">
+ <button onclick="updateHireService()">Update Service</button>
+ <br><br>
+ <h3>Update Gallery</h3>
+ <input type="text" placeholder="Image URL" id="gallery-url">
+ <button onclick="addGalleryImage()">Add Image</button>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact Me</h2>
+<form onsubmit="sendMsg(event)">
+ <input type="text" placeholder="Your Name" id="contact-name" required>
+ <input type="email" placeholder="Your Email" id="contact-email" required>
+ <textarea placeholder="Message" id="contact-msg"></textarea>
+ <button class="btn">Send</button>
+</form>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+<h2>Client Feedback</h2>
+<div class="grid" id="testimonial-grid"></div>
+</section>
+
+<!-- TEAM SECTION -->
+<section class="team" id="team">
+<h2>Meet the Team</h2>
+<div class="grid" id="team-grid"></div>
+</section>
+
+<footer>
+© 2026 Shefaul-1830 | Cyber Expert
+</footer>
+
+<script>
+/* ===== SCROLL ANIMATION ===== */
+window.addEventListener('scroll',()=>{
+ document.querySelectorAll('.front,.team,.testimonials,.gallery,.hire,.admin-panel,.contact').forEach(el=>{
+   if(el.getBoundingClientRect().top<window.innerHeight-100){
+     el.style.opacity='1';
+     el.style.transform='translateY(0)';
+   }
+ });
+});
+
+/* ===== DARK/LIGHT MODE ===== */
+function toggleTheme(){
+ document.body.classList.toggle('light-theme');
+ document.body.style.background = document.body.classList.contains('light-theme') ? '#fff' : '#050505';
+ document.body.style.color = document.body.classList.contains('light-theme') ? '#050505' : '#fff';
+}
+
+/* ===== CONTACT FORM ===== */
+function sendMsg(e){
+ e.preventDefault();
+ const name=document.getElementById('contact-name').value;
+ const email=document.getElementById('contact-email').value;
+ const msg=document.getElementById('contact-msg').value;
+ let messages=JSON.parse(localStorage.getItem('messages')||'[]');
+ messages.push({name,email,msg});
+ localStorage.setItem('messages',JSON.stringify(messages));
+ alert("Message Sent Successfully!");
+ e.target.reset();
+}
+
+/* ===== HIRE SERVICE ALERT ===== */
+function hireService(service,price){
+ alert(`You hired ${service} for $${price}`);
+}
+
+/* ===== ADMIN FUNCTIONS ===== */
+function addNotice(){
+ const title=document.getElementById('notice-title').value;
+ const details=document.getElementById('notice-details').value;
+ alert(`Notice Updated!\nTitle: ${title}\nDetails: ${details}`);
+}
+function updateHireService(){
+ const sel=document.getElementById('hire-service-select').value;
+ const price=document.getElementById('hire-price').value;
+ alert(`${sel} price updated to $${price}`);
+}
+function addGalleryImage(){
+ const url=document.getElementById('gallery-url').value;
+ const gallery=document.getElementById('gallery-grid');
+ const img=document.createElement('img');
+ img.src=url;
+ gallery.appendChild(img);
+ alert('Gallery Updated!');
+}
+
+/* ===== DYNAMIC TESTIMONIALS ===== */
+const testimonials=[
+ {name:'Mursalin',feedback:'Great work! Back my old PUBG ID.'},
+ {name:'Sagor',feedback:'Professional and reliable.'},
+ {name:'Rifat',feedback:'Excellent security services.'}
+];
+const testGrid=document.getElementById('testimonial-grid');
+testimonials.forEach(t=>{
+ const div=document.createElement('div');
+ div.classList.add('card');
+ div.innerHTML=`<h3>${t.name}</h3><p>${t.feedback}</p>`;
+ testGrid.appendChild(div);
+});
+
+/* ===== DYNAMIC TEAM ===== */
+const teamMembers=[
+ {name:'Shefaul',role:'Cyber Expert'},
+ {name:'Aion',role:'Analyst'},
+ {name:'Shefaul',role:'Ethical Hacker'},
+ {name:'Tonmoy',role:'Consultant'}
+];
+const teamGrid=document.getElementById('team-grid');
+teamMembers.forEach(t=>{
+ const div=document.createElement('div');
+ div.classList.add('card');
+ div.innerHTML=`<h3>${t.name}</h3><p>${t.role}</p>`;
+ teamGrid.appendChild(div);
+});
+</script>
+</body>
+</html>
